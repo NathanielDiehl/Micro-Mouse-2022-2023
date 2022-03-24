@@ -11,8 +11,8 @@ class World {
 
 
         static void Init() {
-            RobotPosition.at(0) = 0;
-            RobotPosition.at(1) = 0;
+            RobotPosition[0] = 0;
+            RobotPosition[1] = 0;
             RobotRotation = 0;
 
             ClearWalls();
