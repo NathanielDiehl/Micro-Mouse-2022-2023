@@ -1,0 +1,13 @@
+
+
+class Algorithm {
+    public:
+
+
+
+        Algorithm() {
+        }
+
+        
+
+};
