@@ -10,7 +10,7 @@ class Ultrasonic {
 
 
 
-
+        //Constructs a new Ultrasonic Object
         Ultrasonic(int ppn, int gpn, int tpn, int epn) {
             PowerPinNum = ppn;
             GroundPinNum = gpn;
@@ -18,7 +18,8 @@ class Ultrasonic {
             EchoPinNum = epn;
         }
 
-        float getDistance() {
+        //Measures the distance 
+        float GetDistance() {
             //add code
         }
 
