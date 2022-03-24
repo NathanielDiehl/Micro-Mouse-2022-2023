@@ -1,24 +1,27 @@
 
-//Author Taylor Howell
-//Handles the translation from the brain to the virtual or real world depending on what we need.
+// Author Taylor Howell
 
 #include <vector>
 #include <string>
 
-class Simulator
+//This class handles translating the information from the 'brain' to the real or virtual world
+static class Simulator
 {
-public:
-    bool Virtual = true;
 
-    //call this to import the world
+    // Is the code running the virtual 'gui' (or the hardware)?
+    static const bool Virtual = true;
+
+public:
+    // Call this to import the world
     void ImportWorld()
     {
+
     }
 
-    //call this to run the program
+    // Call this to run the program
     void Run()
     {
-        if (RunVirtual)
+        if (Virtual)
         {
             RunVirtual();
         }
@@ -29,17 +32,15 @@ public:
     }
 
 private:
-
-    //run the virtual simulation here
+    // Run the virtual simulation here
     void RunVirtual()
     {
-        //run the virtual simulation here
+        
     }
 
-    
-    //run the hardware simulation here
+    // Run the hardware simulation here
     void RunHardware()
     {
-        //run the hardware here
+    
     }
 };
