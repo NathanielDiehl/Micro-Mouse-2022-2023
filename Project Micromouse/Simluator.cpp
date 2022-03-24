@@ -10,6 +10,9 @@ using namespace std;
 static class Simulator
 {
 
+    static string _nameOfSelectedAlg;
+    static bool _runningVirtual;
+
 public:
 
     // Call this to import the world
@@ -21,9 +24,11 @@ public:
     // Call this to run the program
     //nameOfSelectedAlgorithm: the name of the selected algorithm
     //runVirtual: should this be executed virtually?
-    void Run(string nameOfSelectedAlgorithm, bool runVirtual)
+    void Init(bool runVirtual) //call an event with an ID??
     {
-        if (runVirtual)
+        _runningVirtual = runVirtual;
+
+        if (_runningVirtual)
         {
             RunVirtual();
         }
