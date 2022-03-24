@@ -26,4 +26,5 @@ class World {
             MazeWalls[row][col] = 1;
         }
 
+
 };
