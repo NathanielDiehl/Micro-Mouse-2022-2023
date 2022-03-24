@@ -1,24 +1,29 @@
 
-//Author Taylor Howell
-//Handles the translation from the brain to the virtual or real world depending on what we need.
+// Author Taylor Howell
 
 #include <vector>
 #include <string>
 
-class Simulator
-{
-public:
-    bool Virtual = true;
+using namespace std;
 
-    //call this to import the world
+//This class handles translating the information from the 'brain' to the real or virtual world
+static class Simulator
+{
+
+public:
+
+    // Call this to import the world
     void ImportWorld()
     {
+
     }
 
-    //call this to run the program
-    void Run()
+    // Call this to run the program
+    //nameOfSelectedAlgorithm: the name of the selected algorithm
+    //runVirtual: should this be executed virtually?
+    void Run(string nameOfSelectedAlgorithm, bool runVirtual)
     {
-        if (RunVirtual)
+        if (runVirtual)
         {
             RunVirtual();
         }
@@ -29,17 +34,15 @@ public:
     }
 
 private:
-
-    //run the virtual simulation here
+    // Run the virtual simulation here
     void RunVirtual()
     {
-        //run the virtual simulation here
+        
     }
 
-    
-    //run the hardware simulation here
+    // Run the hardware simulation here
     void RunHardware()
     {
-        //run the hardware here
+    
     }
 };
