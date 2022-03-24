@@ -4,14 +4,14 @@
 #include <vector>
 #include <string>
 
+using namespace std;
+
 //This class handles translating the information from the 'brain' to the real or virtual world
 static class Simulator
 {
 
-    // Is the code running the virtual 'gui' (or the hardware)?
-    static const bool Virtual = true;
-
 public:
+
     // Call this to import the world
     void ImportWorld()
     {
@@ -19,9 +19,11 @@ public:
     }
 
     // Call this to run the program
-    void Run()
+    //nameOfSelectedAlgorithm: the name of the selected algorithm
+    //runVirtual: should this be executed virtually?
+    void Run(string nameOfSelectedAlgorithm, bool runVirtual)
     {
-        if (Virtual)
+        if (runVirtual)
         {
             RunVirtual();
         }

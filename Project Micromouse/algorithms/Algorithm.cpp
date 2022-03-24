@@ -8,6 +8,4 @@ class Algorithm {
         Algorithm() {
         }
 
-        
-
 };
