@@ -9,11 +9,12 @@ namespace ProjectMicromouse
 {
 
     /**
-     * @brief Paints maze information onto the terminal (my cpp code is awful rn)
+     * @brief Paints maze information onto the terminal
      * @author Taylor Howell
      */
     static class CMDGUI
     {
-       
+    public:
+        //Maze maze;
     };
 }
