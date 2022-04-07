@@ -1,5 +1,4 @@
 #include <string>
-#include "Maze.cpp"
 
 #define MAZE_SIZE 16
 
@@ -15,6 +14,6 @@ namespace ProjectMicromouse
     static class CMDGUI
     {
     public:
-        //Maze maze;
+        
     };
 }
