@@ -1,7 +1,7 @@
 namespace Micromouse_Algo_Sim_C_sharp
 {
     /// <summary>
-    /// Representation of a command
+    /// Class representation of a command
     /// </summary>
     [Author("Taylor Howell", 1.0)]
     public struct Command
