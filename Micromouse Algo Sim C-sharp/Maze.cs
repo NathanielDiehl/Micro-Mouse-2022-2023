@@ -46,13 +46,73 @@ namespace Micromouse_Algo_Sim_C_sharp {
         public byte this[int x, int y] {
             get => _maze[x, y];
         }
+        
+        /// <summary>
+        /// Checks if a wall exists in the specified direction at the specified direction.
+        /// </summary>
+        /// <param name="x">The x-coordinate</param>
+        /// <param name="y">The y-coordinate</param>
+        /// <param name="dir">The direction to check</param>
+        /// <returns></returns>
+        public bool WallExists(int x, int y, Direction dir) {
+            return (_maze[x, y] & (byte)dir) > 0;
+        }
+
+        /// <summary>
+        /// Gets a string of the 2D representation of the maze.
+        /// </summary>
+        /// <returns>A string with a 2D graphical representation of the maze</returns>
+        public override string ToString()
+        {
+            char[,] output = new char[2 * MAZE_SIZE + 1, 4 * MAZE_SIZE + 1];
+
+            for(int i = 0; i < MAZE_SIZE; i++) {
+                for(int j = 0; j < MAZE_SIZE; j++) {
+                    output[2 * i, 4 * j] = '+';
+                    output[2 * i, 4 * j + 4] = '+';
+                    output[2 * i + 2, 4 * j] = '+';
+                    output[2 * i + 2, 4 * j + 4] = '+';
+                    if(WallExists(i, j, Direction.NORTH)) {
+                        output[2 * i, 4 * j + 1] = '-';
+                        output[2 * i, 4 * j + 2] = '-';
+                        output[2 * i, 4 * j + 3] = '-';
+                    }
+                    if(WallExists(i, j, Direction.WEST)) {
+                        output[2 * i + 1, 4 * j] = '|';
+                    }
+                    if(WallExists(i, j, Direction.EAST)) {
+                        output[2 * i + 1, 4 * j + 4] = '|';
+                    }
+                    if(WallExists(i, j, Direction.SOUTH)) {
+                        output[2 * i + 2, 4 * j + 1] = '-';
+                        output[2 * i + 2, 4 * j + 2] = '-';
+                        output[2 * i + 2, 4 * j + 3] = '-';
+                    }
+                }
+            }
+
+            StringBuilder sb = new StringBuilder();
+            for(int i = 0; i < 2 * MAZE_SIZE + 1; i++) {
+                for(int j = 0; j < 4 * MAZE_SIZE + 1; j++) {
+                    if(output[i, j] == '\0') {
+                        sb.Append(' ');
+                    }
+                    else 
+                    {
+                        sb.Append(output[i, j]);
+                    }
+                }
+                sb.Append('\n');
+            }
+
+            return sb.ToString();
+        }
 
         /// <summary>
         /// Gets a string of the 2D representation of the maze.
         /// </summary>
         /// <returns>A string with the hex value for the wall data of each cell in the maze.</returns>
-        // TODO: Print out a graphical representation of each hex value
-        public override string ToString()
+        public string ToHexString()
         {
             StringBuilder sb = new StringBuilder();
             for(int i = 0; i < MAZE_SIZE; i++) {
