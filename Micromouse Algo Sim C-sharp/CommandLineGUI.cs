@@ -18,10 +18,10 @@ namespace Micromouse_Algo_Sim_C_sharp
             while (result != -1)
             {
                 ShowTitle("--- Main Menu ---");
-                List<(string, string, Action)> actions = new List<(string, string, Action)>()
+                List<Command> actions = new List<Command>()
             {
-                ("test", "this is a test", Test),
-                ("Example map", "this shows an example map for all to see", Tick)
+                new Command("test", "this is a test", Test),
+                new Command("Example map", "this shows an example map for all to see", Tick)
             };
 
                 result = ShowCommands(actions, null);
@@ -70,7 +70,7 @@ namespace Micromouse_Algo_Sim_C_sharp
         /// Show the command list in a consistent format, and manage general movement between menus
         /// </summary>
         /// <param name="commands">the string array of commands</param>
-        public static int ShowCommands(List<(string command, string description, Action nextMethod)> commands, Action? back)
+        public static int ShowCommands(List<Command> commands, Action back)
         {
             while (true)
             {
@@ -85,7 +85,7 @@ namespace Micromouse_Algo_Sim_C_sharp
 
                 foreach (var x in commands)
                 {
-                    Console.WriteLine(i + ") " + x.command + "\n\t" + x.description);
+                    Console.WriteLine(i + ") " + x.Title + "\n\t" + x.Description);
                     Console.WriteLine();
 
                     i++;
@@ -101,7 +101,7 @@ namespace Micromouse_Algo_Sim_C_sharp
                 Console.WriteLine();
                 Console.ForegroundColor = ConsoleColor.Blue;
 
-                string? input = Console.ReadLine();
+                string input = Console.ReadLine();
 
                 Console.ResetColor();
 
@@ -122,9 +122,9 @@ namespace Micromouse_Algo_Sim_C_sharp
                 {
                     if (result < commands.Count)
                     {
-                        if (commands[result].nextMethod != null)
+                        if (commands[result].Action != null)
                         {
-                            commands[result].nextMethod();
+                            commands[result].Action();
                         }
 
                         return result;
@@ -151,18 +151,18 @@ namespace Micromouse_Algo_Sim_C_sharp
                     List<string> similarCommands = new List<string>();
                     for (int j = 0; j < commands.Count; j++)
                     {
-                        if (input.ToLower() == commands[j].command.ToLower())
+                        if (input.ToLower() == commands[j].Title.ToLower())
                         {
-                            if (commands[j].nextMethod != null)
+                            if (commands[j].Action != null)
                             {
-                                commands[j].nextMethod();
+                                commands[j].Action();
                             }
 
                             return j;
                         }
-                        else if (LineAnalyzer.GetTokenRatio(input, commands[j].command) > 40)
+                        else if (LineAnalyzer.GetTokenRatio(input, commands[j].Title) > 40)
                         {
-                            similarCommands.Add(commands[j].command);
+                            similarCommands.Add(commands[j].Title);
                         }
                     }
 
