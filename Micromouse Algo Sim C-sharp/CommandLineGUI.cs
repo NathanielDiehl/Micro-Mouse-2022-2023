@@ -20,7 +20,8 @@ namespace Micromouse_Algo_Sim_C_sharp
                 ShowTitle("--- Main Menu ---");
                 List<(string, string, Action)> actions = new List<(string, string, Action)>()
             {
-                ("test", "this is a test", Test)
+                ("test", "this is a test", Test),
+                ("Example map", "this shows an example map for all to see", Tick)
             };
 
                 result = ShowCommands(actions, null);
@@ -116,26 +117,26 @@ namespace Micromouse_Algo_Sim_C_sharp
 
                 input = input.Trim();
 
-                int someCommand = 0;
+                
                 if (Int32.TryParse(input, out var result))
                 {
-                    if (someCommand < commands.Count)
+                    if (result < commands.Count)
                     {
-                        if (commands[someCommand].nextMethod != null)
+                        if (commands[result].nextMethod != null)
                         {
-                            commands[someCommand].nextMethod();
+                            commands[result].nextMethod();
                         }
 
-                        return someCommand;
+                        return result;
                     }
-                    else if (someCommand == commands.Count)
+                    else if (result == commands.Count)
                     {
                         //quit
                         Console.WriteLine();
                         Console.WriteLine("Ending Session");
                         return -1;
                     }
-                    else if (someCommand == commands.Count + 1)
+                    else if (result == commands.Count + 1)
                     {
                         if (back != null)
                         {
