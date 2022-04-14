@@ -1,7 +1,8 @@
 namespace Micromouse_Algo_Sim_C_sharp
 {
     [System.AttributeUsage(System.AttributeTargets.Class |
-                       System.AttributeTargets.Struct)]
+                       System.AttributeTargets.Struct |
+                       System.AttributeTargets.Enum)]
     [Author("Taylor Howell", 1.0)]
     public class AuthorAttribute : System.Attribute
     {

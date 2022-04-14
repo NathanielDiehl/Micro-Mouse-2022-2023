@@ -11,6 +11,8 @@ namespace Micromouse_Algo_Sim_C_sharp
         static void Main(string[] args)
         {
             CommandLineGUI.Tick();
+
+            //Run mapping algorithm
         }
 
         #region move into the command line gui soon
