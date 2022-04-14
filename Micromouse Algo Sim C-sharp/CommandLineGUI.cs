@@ -14,9 +14,9 @@ namespace Micromouse_Algo_Sim_C_sharp
         public static void MainMenu()
         {
             Console.WriteLine("--- Main Menu ---");
-            List<(string, string, Action, Action)> actions = new List<(string, string, Action, Action)>()
+            List<(string, string, Action)> actions = new List<(string, string, Action)>()
             {
-                ("test", "this is a test", () =>{}, () =>{})
+                ("test", "this is a test", () =>{})
             };
 
             ShowCommands(actions);
@@ -57,7 +57,7 @@ namespace Micromouse_Algo_Sim_C_sharp
         /// Show the command list in a consistent format, and manage general movement between menus
         /// </summary>
         /// <param name="commands">the string array of commands</param>
-        public static int ShowCommands(List<(string command, string description, Action nextMethod, Action BackAction)> commands)
+        public static int ShowCommands(List<(string command, string description, Action nextMethod)> commands, Action back)
         {
             while (true)
             {
@@ -75,7 +75,12 @@ namespace Micromouse_Algo_Sim_C_sharp
                     i++;
                 }
 
-                Console.WriteLine((i + 1) + ") Quit \n\tExit the program");
+                Console.WriteLine(i + ") Quit \n\tExit the program");
+
+                if (back != null)
+                {
+                    Console.WriteLine((i + 1) + ") Back \n\tGo Back");
+                }
 
                 string? input = Console.ReadLine();
 
@@ -83,7 +88,7 @@ namespace Micromouse_Algo_Sim_C_sharp
                 {
                     ShowError("input is null");
 
-                    return ShowCommands(commands);
+                    return ShowCommands(commands, back);
                 }
 
                 input = input.Trim();
@@ -100,15 +105,33 @@ namespace Micromouse_Algo_Sim_C_sharp
                         //quit
                         return -1;
                     }
+                    else if (someCommand == commands.Count + 1)
+                    {
+                        if (back != null)
+                        {
+                            back();
+                        }
+                    }
                 }
                 else
                 {
+                    Console.WriteLine();
+                    List<string> similarCommands = new List<string>();
                     for (int j = 0; j < commands.Count; j++)
                     {
                         if (input == commands[j].command)
                         {
                             return j;
                         }
+                        else if (LineAnalyzer.GetTokenRatio(input, commands[j].command) > 60)
+                        {
+                            similarCommands.Add(commands[j].command);
+                        }
+                    }
+
+                    if (similarCommands.Count > 0)
+                    {
+                        Console.WriteLine("Similar Commands:\n\t" + string.Join(", ", similarCommands));
                     }
 
                     if (input == "Quit")
@@ -118,18 +141,34 @@ namespace Micromouse_Algo_Sim_C_sharp
                     }
                 }
             }
-
-            //quit
-            return -1;
         }
 
         /// <summary>
         /// Show an error message
         /// </summary>
-        /// <param name="message"></param>
+        /// <param name="message">the message</param>
         public static void ShowError(string message)
         {
             Console.WriteLine($"Error!\n{message}");
+        }
+
+
+        /// <summary>
+        /// Show an warning message
+        /// </summary>
+        /// <param name="message">the message</param>
+        public static void ShowWarning(string message)
+        {
+            Console.WriteLine($"Warning!\n{message}");
+        }
+
+        /// <summary>
+        /// Show an message
+        /// </summary>
+        /// <param name="message">the message</param>
+        public static void ShowMessage(string message)
+        {
+            Console.WriteLine($"Note:\n{message}");
         }
     }
 }
