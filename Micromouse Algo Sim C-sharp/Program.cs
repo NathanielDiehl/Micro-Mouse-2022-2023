@@ -10,8 +10,7 @@ namespace Micromouse_Algo_Sim_C_sharp
     {
         static void Main(string[] args)
         {
-            ///CommandLineGUI.Tick();
-            CommandLineGUI.MainMenu();
+            CommandLineGUI.Menu();
         }
     } 
 }

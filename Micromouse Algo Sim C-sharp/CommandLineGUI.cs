@@ -11,15 +11,20 @@ namespace Micromouse_Algo_Sim_C_sharp
         /// The main menu 
         /// </summary>
         /// <remarks>this stuff should be moved into CommandlineGUI.cs</remarks>
-        public static void MainMenu()
+        public static void Menu()
         {
-            Console.WriteLine("--- Main Menu ---");
-            List<(string, string, Action)> actions = new List<(string, string, Action)>()
+            int result = 0;
+
+            while (result != -1)
             {
-                ("test", "this is a test", () =>{})
+                ShowTitle("--- Main Menu ---");
+                List<(string, string, Action)> actions = new List<(string, string, Action)>()
+            {
+                ("test", "this is a test", Test)
             };
 
-            ShowCommands(actions);
+                result = ShowCommands(actions, null);
+            }
 
         }
 
@@ -27,6 +32,13 @@ namespace Micromouse_Algo_Sim_C_sharp
         {
             Console.WriteLine("Example Maze:\n");
             Console.WriteLine(CreateExampleOutput());
+        }
+
+        public static void Test()
+        {
+            ShowError("Something went wrong!");
+            ShowMessage("Make sure to brush your teeth");
+            ShowWarning("the robot failed");
         }
 
         private static string CreateExampleOutput()
@@ -57,13 +69,16 @@ namespace Micromouse_Algo_Sim_C_sharp
         /// Show the command list in a consistent format, and manage general movement between menus
         /// </summary>
         /// <param name="commands">the string array of commands</param>
-        public static int ShowCommands(List<(string command, string description, Action nextMethod)> commands, Action back)
+        public static int ShowCommands(List<(string command, string description, Action nextMethod)> commands, Action? back)
         {
             while (true)
             {
 
-                Console.WriteLine();
-                Console.WriteLine("Commands: ");
+                Console.WriteLine("---------------------------------");
+
+                ShowSubTitle("Enter A Command");
+
+                Console.WriteLine("");
 
                 int i = 0;
 
@@ -82,13 +97,21 @@ namespace Micromouse_Algo_Sim_C_sharp
                     Console.WriteLine((i + 1) + ") Back \n\tGo Back");
                 }
 
+                Console.WriteLine();
+                Console.ForegroundColor = ConsoleColor.Blue;
+
                 string? input = Console.ReadLine();
+
+                Console.ResetColor();
 
                 if (input == null)
                 {
                     ShowError("input is null");
 
-                    return ShowCommands(commands, back);
+                    if (back != null)
+                        return ShowCommands(commands, back);
+
+                    return ShowCommands(commands, null);
                 }
 
                 input = input.Trim();
@@ -98,11 +121,18 @@ namespace Micromouse_Algo_Sim_C_sharp
                 {
                     if (someCommand < commands.Count)
                     {
+                        if (commands[someCommand].nextMethod != null)
+                        {
+                            commands[someCommand].nextMethod();
+                        }
+
                         return someCommand;
                     }
                     else if (someCommand == commands.Count)
                     {
                         //quit
+                        Console.WriteLine();
+                        Console.WriteLine("Ending Session");
                         return -1;
                     }
                     else if (someCommand == commands.Count + 1)
@@ -110,6 +140,7 @@ namespace Micromouse_Algo_Sim_C_sharp
                         if (back != null)
                         {
                             back();
+                            return -2;
                         }
                     }
                 }
@@ -119,11 +150,16 @@ namespace Micromouse_Algo_Sim_C_sharp
                     List<string> similarCommands = new List<string>();
                     for (int j = 0; j < commands.Count; j++)
                     {
-                        if (input == commands[j].command)
+                        if (input.ToLower() == commands[j].command.ToLower())
                         {
+                            if (commands[j].nextMethod != null)
+                            {
+                                commands[j].nextMethod();
+                            }
+
                             return j;
                         }
-                        else if (LineAnalyzer.GetTokenRatio(input, commands[j].command) > 60)
+                        else if (LineAnalyzer.GetTokenRatio(input, commands[j].command) > 40)
                         {
                             similarCommands.Add(commands[j].command);
                         }
@@ -131,16 +167,45 @@ namespace Micromouse_Algo_Sim_C_sharp
 
                     if (similarCommands.Count > 0)
                     {
-                        Console.WriteLine("Similar Commands:\n\t" + string.Join(", ", similarCommands));
+                        Console.ForegroundColor = ConsoleColor.Magenta;
+                        Console.WriteLine("Similar Commands: \t" + string.Join(", ", similarCommands));
+                        Console.ForegroundColor = ConsoleColor.Gray;
                     }
 
-                    if (input == "Quit")
+                    if (input.ToLower() == "Quit".ToLower())
                     {
                         //quit
+
+                        Console.WriteLine();
+                        Console.WriteLine("Ending Session");
                         return -1;
+                    }
+
+                    if (input.ToLower() == "Back".ToLower())
+                    {
+                        if (back != null)
+                            back();
+                        return -2;
                     }
                 }
             }
+        }
+
+        public static void ShowTitle(string title)
+        {
+            Console.WriteLine("");
+            Console.ForegroundColor = ConsoleColor.Black;
+            Console.BackgroundColor = ConsoleColor.White;
+            Console.WriteLine($"{title}");
+            Console.ResetColor();
+            Console.WriteLine("");
+        }
+
+        public static void ShowSubTitle(string title)
+        {
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.WriteLine($"{title}");
+            Console.ResetColor();
         }
 
         /// <summary>
@@ -149,7 +214,9 @@ namespace Micromouse_Algo_Sim_C_sharp
         /// <param name="message">the message</param>
         public static void ShowError(string message)
         {
-            Console.WriteLine($"Error!\n{message}");
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine($"Error! - {message}");
+            Console.ResetColor();
         }
 
 
@@ -159,7 +226,9 @@ namespace Micromouse_Algo_Sim_C_sharp
         /// <param name="message">the message</param>
         public static void ShowWarning(string message)
         {
-            Console.WriteLine($"Warning!\n{message}");
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.WriteLine($"Warning! - {message}");
+            Console.ResetColor();
         }
 
         /// <summary>
@@ -168,7 +237,9 @@ namespace Micromouse_Algo_Sim_C_sharp
         /// <param name="message">the message</param>
         public static void ShowMessage(string message)
         {
-            Console.WriteLine($"Note:\n{message}");
+            Console.ForegroundColor = ConsoleColor.Cyan;
+            Console.WriteLine($"Note: {message}");
+            Console.ResetColor();
         }
     }
 }
