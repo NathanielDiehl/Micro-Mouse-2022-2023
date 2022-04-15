@@ -6,7 +6,7 @@ namespace Micromouse_Algo_Sim_C_sharp
     [Author("Taylor Howell", 1.0)]
     public class AuthorAttribute : System.Attribute
     {
-        public string Name { get; private set; }
+        public string[] Name { get; private set; }
         public double Version { get; private set; }
 
         public string Comments { get; private set; }
@@ -35,7 +35,7 @@ namespace Micromouse_Algo_Sim_C_sharp
         /// <param name="version">the version of the code</param>
         public AuthorAttribute(string name, double version)
         {
-            Name = name;
+            Name = new string[1] { name };
             Version = version;
             Comments = "";
         }
@@ -48,7 +48,32 @@ namespace Micromouse_Algo_Sim_C_sharp
         /// <param name="comments">comments for your liking</param>
         public AuthorAttribute(string name, double version, string comments)
         {
-            Name = name;
+            Name = new string[1] { name };
+            Version = version;
+            Comments = comments;
+        }
+
+        /// <summary>
+        /// Handles a list of authors
+        /// </summary>
+        /// <param name="names">the authors</param>
+        /// <param name="version">the version of the program</param>
+        public AuthorAttribute(string[] names, double version)
+        {
+            Name = names;
+            Version = version;
+            Comments = "";
+        }
+
+        /// <summary>
+        /// Handles a list of authors
+        /// </summary>
+        /// <param name="names">the authors</param>
+        /// <param name="version">the version of the script</param>
+        /// <param name="comments">comments for the script</param>
+        public AuthorAttribute(string[] names, double version, string comments)
+        {
+            Name = names;
             Version = version;
             Comments = comments;
         }
