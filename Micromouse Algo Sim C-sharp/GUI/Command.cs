@@ -1,6 +1,6 @@
-using Micromouse_Algo_Sim_C_sharp;
+using Micromouse_Algo_Sim_C_sharp.GUI;
 
-namespace Micromouse_Algo_Sim_C_sharp.GUI
+namespace Micromouse_Algo_Sim_C_sharp
 {
     /// <summary>
     /// Class representation of a command
