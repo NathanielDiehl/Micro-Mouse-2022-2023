@@ -1,3 +1,6 @@
+
+using Micromouse_Algo_Sim_C_sharp.GUI;
+
 namespace Micromouse_Algo_Sim_C_sharp
 {
     /// <summary>
@@ -20,57 +23,22 @@ namespace Micromouse_Algo_Sim_C_sharp
                 ShowTitle("--- Main Menu ---");
                 List<Command> actions = new List<Command>()
             {
-                new Command("test", "this is a test", Test),
-                new Command("Example map", "this shows an example map for all to see", Tick)
+                new Command("test", "this is a test", GUITestCases.TestMessages),
+                new Command("Example map", "this shows an example map for all to see", GUITestCases.CreateExampleMaze),
+                new Command("Run Test Case", "Run a test case with a lot of data", () => GUITestCases.DoNumbers(20))
             };
 
-                result = ShowCommands(actions, null);
+                result = ShowCommands(actions);
             }
 
         }
 
-        public static void Tick()
-        {
-            Console.WriteLine("Example Maze:\n");
-            Console.WriteLine(CreateExampleOutput());
-        }
-
-        public static void Test()
-        {
-            ShowError("Something went wrong!");
-            ShowMessage("Make sure to brush your teeth");
-            ShowWarning("the robot failed");
-        }
-
-        private static string CreateExampleOutput()
-        {
-            string str =
-            "   0 1 2 3 4 5 6 7 8 9 A B C D E F \n" +
-            "0  _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n" +
-            "1 |_|_ _ _ _|_ _ _ _ _ _ _  |_ _ _|\n" +
-            "2 |_ _ _ _|_ _     _ _ _ _ _ _ _ _|\n" +
-            "3 |_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n" +
-            "4 |_|_ _ _ _|_ _ _ _ _ _ _  |_ _ _|\n" +
-            "5 |_ _ _ _|_ _     _ _ _ _ _ _ _ _|\n" +
-            "6 |_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _|\n" +
-            "7 |_|_ _ _ _|_ _ _ _ _ _ _  |_ _ _|\n" +
-            "8 |_ _ _ _|_ _     _ _ _ _ _ _ _ _|\n" +
-            "9 |_|_ _ _ _|_ _ _ _ _ _ _  |_ _ _|\n" +
-            "A |_ _ _ _|_ _     _ _ _ _ _ _ _ _|\n" +
-            "B |_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _|\n" +
-            "C |_|_ _ _ _|_ _ _ _ _ _ _  |_ _ _|\n" +
-            "D |_ _ _ _|_ _     _ _ _ _ _ _ _ _|\n" +
-            "E |_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _|\n" +
-            "F |_|_ _ _ _|_ _ _ _ _ _ _  |_ _ _|\n";
-
-            return str;
-        }
 
         /// <summary>
         /// Show the command list in a consistent format, and manage general movement between menus
         /// </summary>
         /// <param name="commands">the string array of commands</param>
-        public static int ShowCommands(List<Command> commands, Action back)
+        public static int ShowCommands(List<Command> commands)
         {
             while (true)
             {
@@ -85,18 +53,13 @@ namespace Micromouse_Algo_Sim_C_sharp
 
                 foreach (var x in commands)
                 {
-                    Console.WriteLine(i + ") " + x.Title + "\n\t" + x.Description);
+                    Console.WriteLine(i + ") " + x.Title + "\n" + x.Description);
                     Console.WriteLine();
 
                     i++;
                 }
 
-                Console.WriteLine(i + ") Quit \n\tExit the program");
-
-                if (back != null)
-                {
-                    Console.WriteLine((i + 1) + ") Back \n\tGo Back");
-                }
+                Console.WriteLine(i + ") Back \nExit the menu");
 
                 Console.WriteLine();
                 Console.ForegroundColor = ConsoleColor.Blue;
@@ -109,15 +72,13 @@ namespace Micromouse_Algo_Sim_C_sharp
                 {
                     ShowError("input is null");
 
-                    if (back != null)
-                        return ShowCommands(commands, back);
 
-                    return ShowCommands(commands, null);
+                    return ShowCommands(commands);
                 }
 
                 input = input.Trim();
 
-                
+
                 if (Int32.TryParse(input, out var result))
                 {
                     if (result < commands.Count)
@@ -133,16 +94,8 @@ namespace Micromouse_Algo_Sim_C_sharp
                     {
                         //quit
                         Console.WriteLine();
-                        Console.WriteLine("Ending Session");
+                        Console.WriteLine("Going Back");
                         return -1;
-                    }
-                    else if (result == commands.Count + 1)
-                    {
-                        if (back != null)
-                        {
-                            back();
-                            return -2;
-                        }
                     }
                 }
                 else
@@ -173,27 +126,27 @@ namespace Micromouse_Algo_Sim_C_sharp
                         Console.ForegroundColor = ConsoleColor.Gray;
                     }
 
-                    if (input.ToLower() == "Quit".ToLower())
+                    if (input.ToLower() == "Back".ToLower())
                     {
                         //quit
 
                         Console.WriteLine();
-                        Console.WriteLine("Ending Session");
+                        Console.WriteLine("Going Back");
                         return -1;
                     }
 
-                    if (input.ToLower() == "Back".ToLower())
-                    {
-                        if (back != null)
-                            back();
-                        return -2;
-                    }
                 }
             }
         }
 
+        /// <summary>
+        /// Show a title (black text with a white background)
+        /// </summary>
+        /// <param name="title">the title</param>
         public static void ShowTitle(string title)
         {
+            title = CreateNewLinesForLongMessages(title);
+
             Console.WriteLine("");
             Console.ForegroundColor = ConsoleColor.Black;
             Console.BackgroundColor = ConsoleColor.White;
@@ -202,8 +155,14 @@ namespace Micromouse_Algo_Sim_C_sharp
             Console.WriteLine("");
         }
 
+        /// <summary>
+        /// Show a subtitle (green text)
+        /// </summary>
+        /// <param name="title">the title</param>
         public static void ShowSubTitle(string title)
         {
+            title = CreateNewLinesForLongMessages(title);
+
             Console.ForegroundColor = ConsoleColor.Green;
             Console.WriteLine($"{title}");
             Console.ResetColor();
@@ -215,6 +174,8 @@ namespace Micromouse_Algo_Sim_C_sharp
         /// <param name="message">the message</param>
         public static void ShowError(string message)
         {
+            message = CreateNewLinesForLongMessages(message);
+
             Console.ForegroundColor = ConsoleColor.Red;
             Console.WriteLine($"Error! - {message}");
             Console.ResetColor();
@@ -227,6 +188,8 @@ namespace Micromouse_Algo_Sim_C_sharp
         /// <param name="message">the message</param>
         public static void ShowWarning(string message)
         {
+            message = CreateNewLinesForLongMessages(message);
+
             Console.ForegroundColor = ConsoleColor.Yellow;
             Console.WriteLine($"Warning! - {message}");
             Console.ResetColor();
@@ -238,9 +201,74 @@ namespace Micromouse_Algo_Sim_C_sharp
         /// <param name="message">the message</param>
         public static void ShowMessage(string message)
         {
+            message = CreateNewLinesForLongMessages(message);
+
             Console.ForegroundColor = ConsoleColor.Cyan;
             Console.WriteLine($"Note: {message}");
             Console.ResetColor();
+        }
+
+        /// <summary>
+        /// Creates a new line for the message if it is greater than 20 characters
+        /// </summary>
+        /// <param name="message">the message</param>
+        /// <returns>the message with new line characters</returns>
+        public static string CreateNewLinesForLongMessages(string message)
+        {
+
+            //Console.WriteLine($"{message}");
+
+            bool usedTab = message[0] == '\t';
+
+            if (message.Length > 20)
+            {
+                for (int i = 0; i < message.Length; i += 40)
+                {
+                    for (int j = i; j >= 0; j--)
+                    {
+                        if (message[j] == ' ')
+                        {
+
+                            if (usedTab)
+                            {
+                                message = message.Remove(j, 1);
+                                message = message.Insert(j, "\n\t");
+                            }
+                            else
+                            {
+                                message = message.Insert(i, "\n");
+                            }
+                            break;
+                        }
+                    }
+                }
+            }
+
+            return message;
+        }
+
+        /// <summary>
+        /// Show a list of data
+        /// </summary>
+        /// <param name="data">the data</param>
+        /// <typeparam name="T">the collection</typeparam>
+        public static void ShowData<T>(IEnumerable<T> data)
+        {
+            Console.WriteLine("\tData: ");
+
+            int i = 0;
+            foreach (var x in data)
+            {
+                if (i % 2 == 0) Console.ForegroundColor = ConsoleColor.DarkYellow;
+                else Console.ForegroundColor = ConsoleColor.DarkGreen;
+
+                Console.WriteLine(i + ") " + x);
+                i++;
+            }
+
+            Console.ResetColor();
+            Console.WriteLine("----End Of Data----");
+            Console.WriteLine();
         }
     }
 }

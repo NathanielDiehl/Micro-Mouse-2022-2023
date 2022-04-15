@@ -10,7 +10,14 @@ namespace Micromouse_Algo_Sim_C_sharp
     {
         static void Main(string[] args)
         {
-            CommandLineGUI.Menu();
+            try
+            {
+                CommandLineGUI.Menu();
+            }
+            catch (Exception ex)
+            {
+                CommandLineGUI.ShowError(ex.Message); //help debug a crash (hopefully)
+            }
         }
-    } 
+    }
 }

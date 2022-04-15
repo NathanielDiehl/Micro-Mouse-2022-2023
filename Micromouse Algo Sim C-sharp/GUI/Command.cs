@@ -1,4 +1,6 @@
-namespace Micromouse_Algo_Sim_C_sharp
+using Micromouse_Algo_Sim_C_sharp;
+
+namespace Micromouse_Algo_Sim_C_sharp.GUI
 {
     /// <summary>
     /// Class representation of a command
@@ -22,7 +24,7 @@ namespace Micromouse_Algo_Sim_C_sharp
         /// The action (code of) the command if the command is chosen from the list
         /// </summary>
         /// <value></value>
-        public Action Action {get; init;}
+        public Action Action { get; init; }
 
         /// <summary>
         /// Default constructor for a command
@@ -45,8 +47,8 @@ namespace Micromouse_Algo_Sim_C_sharp
         /// <param name="method">the method to call</param>
         public Command(string title, string description, Action method)
         {
-            Title = title;
-            Description = description;
+            Title = CommandLineGUI.CreateNewLinesForLongMessages(title);
+            Description = CommandLineGUI.CreateNewLinesForLongMessages("\t" + description);
             Action = method;
         }
     }
