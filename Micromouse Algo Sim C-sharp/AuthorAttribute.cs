@@ -3,12 +3,25 @@ namespace Micromouse_Algo_Sim_C_sharp
     [System.AttributeUsage(System.AttributeTargets.Class |
                        System.AttributeTargets.Struct |
                        System.AttributeTargets.Enum)]
-    [Author("Taylor Howell", 1.0)]
+    [Author("Taylor Howell", 2.0)]
     public class AuthorAttribute : System.Attribute
-    {
+    {   
+        /// <summary>
+        /// The name or names of authors
+        /// </summary>
+        /// <value></value>
         public string[] Name { get; private set; }
+
+        /// <summary>
+        /// The script version
+        /// </summary>
+        /// <value></value>
         public double Version { get; private set; }
 
+        /// <summary>
+        /// Any comments?
+        /// </summary>
+        /// <value></value>
         public string Comments { get; private set; }
 
         public static readonly string Liscense = "The MIT License (MIT)" +

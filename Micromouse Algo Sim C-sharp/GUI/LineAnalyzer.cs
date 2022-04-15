@@ -3,7 +3,7 @@ namespace Micromouse_Algo_Sim_C_sharp
     /// <summary>
     /// Handles statistically comparing two strings statistically (better than string.compare())
     /// </summary>
-    [Author("Taylor Howell", 1.2)]
+    [Author("Taylor Howell", 1.3)]
     public class LineAnalyzer
     {
         /// <summary>

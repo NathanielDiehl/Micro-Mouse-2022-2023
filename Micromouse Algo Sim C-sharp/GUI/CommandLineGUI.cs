@@ -6,7 +6,7 @@ namespace Micromouse_Algo_Sim_C_sharp
     /// <summary>
     /// Handles the GUI for the micromouse simulator
     /// </summary>
-    [Author("Taylor Howell", 1.0)]
+    [Author("Taylor Howell", 1.2)]
     public static class CommandLineGUI
     {
 
