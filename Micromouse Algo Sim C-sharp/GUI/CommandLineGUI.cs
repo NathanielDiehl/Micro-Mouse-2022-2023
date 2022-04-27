@@ -170,6 +170,16 @@ namespace Micromouse_Algo_Sim_C_sharp
         }
 
         /// <summary>
+        /// Show text to the console (a text analyzer is applied that shortens the text to make it fit easier in the console)
+        /// </summary>
+        /// <param name="text">the text</param>
+        public static void ShowText(string text)
+        {
+            text = CreateNewLinesForLongMessages(text);
+            Console.WriteLine(text);
+        }
+
+        /// <summary>
         /// Show an error message
         /// </summary>
         /// <param name="message">the message</param>
@@ -272,6 +282,13 @@ namespace Micromouse_Algo_Sim_C_sharp
             Console.WriteLine();
         }
 
+        /// <summary>
+        /// Prints "----Done----"
+        /// </summary>
+        public static void PrintDone()
+        {
+            ShowText("\n----Done----\n");
+        }
 
         /// <summary>
         /// Show the maze in the command line
