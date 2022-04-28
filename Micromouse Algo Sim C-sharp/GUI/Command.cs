@@ -47,8 +47,8 @@ namespace Micromouse_Algo_Sim_C_sharp
         /// <param name="method">the method to call</param>
         public Command(string title, string description, Action method)
         {
-            Title = CommandLineGUI.CreateNewLinesForLongMessages(title);
-            Description = CommandLineGUI.CreateNewLinesForLongMessages("\t" + description);
+            Title = LineGUI.CreateNewLinesForLongMessages(title);
+            Description = LineGUI.CreateNewLinesForLongMessages("\t" + description);
             Action = method;
         }
     }

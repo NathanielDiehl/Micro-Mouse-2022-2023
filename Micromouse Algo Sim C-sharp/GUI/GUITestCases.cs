@@ -51,9 +51,9 @@ namespace Micromouse_Algo_Sim_C_sharp.GUI
                 data2.Add(p.Dequeue());
             }
 
-            CommandLineGUI.ShowData(data2);
+            LineGUI.ShowData(data2);
 
-            CommandLineGUI.ShowCommands(new List<Command>() {
+            LineGUI.ShowCommands(new List<Command>() {
                 new Command("Run again", "run the test again", () => DoNumbers(20)),
             });
         }
@@ -73,9 +73,9 @@ namespace Micromouse_Algo_Sim_C_sharp.GUI
         /// </summary>
         public static void TestMessages()
         {
-            CommandLineGUI.ShowError("Something went wrong!");
-            CommandLineGUI.ShowMessage("Make sure to brush your teeth");
-            CommandLineGUI.ShowWarning("the robot failed");
+            LineGUI.ShowError("Something went wrong!");
+            LineGUI.ShowMessage("Make sure to brush your teeth");
+            LineGUI.ShowWarning("the robot failed");
         }
     }
 }
