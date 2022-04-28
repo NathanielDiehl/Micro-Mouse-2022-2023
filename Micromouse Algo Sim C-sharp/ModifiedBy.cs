@@ -4,7 +4,7 @@ namespace Micromouse_Algo_Sim_C_sharp
                        System.AttributeTargets.Struct | System.AttributeTargets.Enum
                         | System.AttributeTargets.Struct | System.AttributeTargets.Interface)]
     [Author("Taylor Howell", 1.0)]
-    public class ModifiedBy : System.Attribute
+    public class ModifiedByAttribute : System.Attribute
     {
         public string Name { get; private set; }
         public double Version { get; private set; }
@@ -33,7 +33,7 @@ namespace Micromouse_Algo_Sim_C_sharp
         /// </summary>
         /// <param name="name">the name of the author</param>
         /// <param name="version">the version of the code</param>
-        public ModifiedBy(string name, double version)
+        public ModifiedByAttribute(string name, double version)
         {
             Name = name;
             Version = version;
@@ -46,7 +46,7 @@ namespace Micromouse_Algo_Sim_C_sharp
         /// <param name="name">the name of the author</param>
         /// <param name="version">the version of the code</param>
         /// <param name="comments">comments for your liking</param>
-        public ModifiedBy(string name, double version, string comments)
+        public ModifiedByAttribute(string name, double version, string comments)
         {
             Name = name;
             Version = version;
