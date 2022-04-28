@@ -18,12 +18,14 @@ namespace Micromouse_Algo_Sim_C_sharp {
         };
 
         private byte[,] _maze;
+        
+        public string Name { get; set; }
 
         /// <summary>
         /// Constructs a maze from a given file, or a random file if none is specified.
         /// </summary>
         /// <param name="file">Optional name of the maze file</param>
-        public Maze(string file = "") {
+        public Maze(string name = "", string file = "") {
             if(file == "") {
                 string[] allFiles = Directory.GetFiles(@"mazefiles/", "*.maz");
                 Random random = new Random();
@@ -37,6 +39,12 @@ namespace Micromouse_Algo_Sim_C_sharp {
             for(int i = 0; i < rawMaze.Length; i++)
             {
                 _maze[MAZE_SIZE - 1 - i % MAZE_SIZE, i / MAZE_SIZE] = rawMaze[i];
+            }
+
+            if(name == "") {
+                Name = file;
+            } else {
+                Name = name;
             }
         }
 
@@ -64,6 +72,32 @@ namespace Micromouse_Algo_Sim_C_sharp {
         /// <returns>A string with a 2D graphical representation of the maze</returns>
         public override string ToString()
         {
+            return PrintMazeWithRobot(new Position());
+        }
+
+        /// <summary>
+        /// Gets a string of the 2D representation of the maze.
+        /// </summary>
+        /// <returns>A string with the hex value for the wall data of each cell in the maze.</returns>
+        public string ToHexString()
+        {
+            StringBuilder sb = new StringBuilder();
+            for(int i = 0; i < MAZE_SIZE; i++) {
+                for(int j = 0; j < MAZE_SIZE; j++) {
+                    sb.Append(Convert.ToHexString(new byte[]{_maze[i, j]}));
+                    sb.Append(' ');
+                }
+                sb.Append("\n");
+            }
+            return sb.ToString();
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="p">The robot's position</param>
+        /// <returns>A string with a 2D graphical representation of the maze and the robot</returns>
+        public string PrintMazeWithRobot(Position p) {
             char[,] output = new char[2 * MAZE_SIZE + 1, 4 * MAZE_SIZE + 1];
 
             for(int i = 0; i < MAZE_SIZE; i++) {
@@ -88,6 +122,9 @@ namespace Micromouse_Algo_Sim_C_sharp {
                         output[2 * i + 2, 4 * j + 2] = '-';
                         output[2 * i + 2, 4 * j + 3] = '-';
                     }
+                    if(i == p.X && j == p.Y) {
+                        output[2 * i + 1, 4 * j + 2] = 'X';
+                    }
                 }
             }
 
@@ -105,23 +142,6 @@ namespace Micromouse_Algo_Sim_C_sharp {
                 sb.Append('\n');
             }
 
-            return sb.ToString();
-        }
-
-        /// <summary>
-        /// Gets a string of the 2D representation of the maze.
-        /// </summary>
-        /// <returns>A string with the hex value for the wall data of each cell in the maze.</returns>
-        public string ToHexString()
-        {
-            StringBuilder sb = new StringBuilder();
-            for(int i = 0; i < MAZE_SIZE; i++) {
-                for(int j = 0; j < MAZE_SIZE; j++) {
-                    sb.Append(Convert.ToHexString(new byte[]{_maze[i, j]}));
-                    sb.Append(' ');
-                }
-                sb.Append("\n");
-            }
             return sb.ToString();
         }
 
