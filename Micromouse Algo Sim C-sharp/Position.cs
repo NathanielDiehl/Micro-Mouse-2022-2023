@@ -14,5 +14,15 @@ namespace Micromouse_Algo_Sim_C_sharp
     {
         public int X;
         public int Y;
+
+        public Position() {
+            X = -1;
+            Y = -1;
+        }
+
+        public Position(int x, int y) {
+            X = x;
+            Y = y;
+        }
     }
 }

@@ -30,7 +30,6 @@ namespace Micromouse_Algo_Sim_C_sharp {
                 string[] allFiles = Directory.GetFiles(@"mazefiles/", "*.maz");
                 Random random = new Random();
                 file = allFiles[random.Next() % allFiles.Length];
-                Console.WriteLine("No maze file specified, loading " + file);
             }
 
             byte[] rawMaze = File.ReadAllBytes(file);
