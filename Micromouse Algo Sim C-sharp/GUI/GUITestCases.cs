@@ -1,5 +1,6 @@
 
 using Micromouse_Algo_Sim_C_sharp;
+using System.Numerics;
 
 namespace Micromouse_Algo_Sim_C_sharp.GUI
 {
