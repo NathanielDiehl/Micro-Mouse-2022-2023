@@ -297,8 +297,19 @@ namespace Micromouse_Algo_Sim_C_sharp
         /// <param name="botLocation">the location of the bot</param>
         public static void PaintMaze(Maze maze)
         {
-            ShowSubTitle("----Maze----\n\n");
+            ShowSubTitle($"----Maze '{maze.Name}'----\n\n");
             Console.WriteLine(maze.ToString());
+        }
+
+        /// <summary>
+        /// Show the maze in the command line
+        /// </summary>
+        /// <param name="maze">the maze</param>
+        /// <param name="botPosition">the location of the bot</param>
+        public static void PaintMaze(Maze maze, Position BotPosition)
+        {
+            ShowSubTitle($"----Maze '{maze.Name}'----\n\n");
+            Console.WriteLine(maze.PrintMazeWithRobot(BotPosition));
         }
 
         /// <summary>
@@ -308,8 +319,21 @@ namespace Micromouse_Algo_Sim_C_sharp
         /// <param name="stepNumber">the step number</param>
         public static void PaintMaze(Maze maze, int stepNumber)
         {
-            ShowSubTitle(stepNumber + ")\n");
+            ShowSubTitle(maze.Name + " " + stepNumber + ")\n");
             Console.WriteLine(maze.ToString());
+        }
+
+
+         /// <summary>
+        /// Show the maze in the command line along with the step number <paramRef name="stepNumber"/> (to show the iterations).
+        /// </summary>
+        /// <param name="maze">the maze</param>
+        /// <param name="stepNumber">the step number</param>
+        /// <param name="botPosition">the location of the bot</param>
+        public static void PaintMaze(Maze maze, int stepNumber, Position BotPosition)
+        {
+            ShowSubTitle(maze.Name + " " + stepNumber + ")\n");
+            Console.WriteLine(maze.PrintMazeWithRobot(BotPosition));
         }
     }
 }
